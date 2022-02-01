@@ -5,26 +5,26 @@ on:
 
 jobs:
   post-on-release:
-    name: Post on release
+    name: Post dispatch on release
     runs-on: ubuntu-latest
     steps:
-      - name: Stores incoming version
+      - name: Stores new tag in environment variable
         run: |
           version=`echo ${{ github.event.release.tag_name }} | sed s/v//`
+          version="0.3.0"
           echo "version=$version" >> $GITHUB_ENV
-      - name: Downloads file and computes sha256
+      - name: Downloads release file and computes sha256
         run: |
           curl -L -o subo.tar.gz https://github.com/suborbital/subo/archive/v${{ env.version }}.tar.gz
           suboSHA=`sha256sum subo.tar.gz | cut -c -64`
+          suboSHA="85c53369904cd83393e6adb9fb29f1737c81ebae669459aa572da1c5f03a69ea"
           rm subo.tar.gz
           echo "sha=$suboSHA" >> $GITHUB_ENV
-      - name: Sends a thing someplace
+      - name: Sends the dispatch event to homebrew-subo
         run: |
           curl \
             -X POST \
             -H "Accept: application/vnd.github.v3+json" \
-            https://hookb.in/aBkdwDqjD9sXQ9kkQ8Ox \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            https://api.github.com/repos/javorszky/workflow-test-target/dispatches \
             -d '{"event_type": "subo_release", "client_payload": {"sha": "${{ env.sha }}","tag": "${{ env.version }}", "release_url": "${{ github.event.release.html_url}}"}}'
-
-
-# cat test.json | jq '.assets | .[] | .name | select(test("-darwin-amd64.tar.gz$"))'
