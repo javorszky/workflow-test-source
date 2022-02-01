@@ -1,16 +1,16 @@
 name: dispatch-on-release
-on: push
+on:
+  release:
+    types: [released]
 
 jobs:
-  post-on-push:
-    name: Post on push
+  post-on-release:
+    name: Post on release
     runs-on: ubuntu-latest
     steps:
-      - name: Display the path
-        run: echo $PATH
-        shell: bash
-      - name: Check out source?
-        uses: actions/checkout@v2
+      - name: Displays release details
+        run: |
+          echo ${{ github.event.release.assets }}
       - name: Sends a thing someplace
         run: |
           curl \
