@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Displays release details
         run: |
-          jq '.[].browser_download_url ${{ github.event.release.assets }}'
+          jq '.[].browser_download_url ${{ toJSON(github.event.release.assets) }}'
       - name: Sends a thing someplace
         run: |
           curl \
