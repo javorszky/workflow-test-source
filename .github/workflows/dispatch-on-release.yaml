@@ -8,11 +8,10 @@ jobs:
     name: Post on release
     runs-on: ubuntu-latest
     steps:
-      - name: Installs jq
-        run: sudo apt-get install jq
       - name: Displays release details
-        run: |
-          jq '.[].browser_download_url | ${{ github.event.release.assets }}'
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: jq '.[].browser_download_url | ${{ github.event.release.assets }}'
       - name: Sends a thing someplace
         run: |
           curl \
@@ -20,4 +19,3 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             https://hookb.in/yDZnE8VJlPtG9yjj91km \
             -d '{"event_type": "my_event"}'
-
