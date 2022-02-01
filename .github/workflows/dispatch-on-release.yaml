@@ -25,7 +25,7 @@ jobs:
         with:
           token: ${{ secrets.REPOTOKEN }}
           repository: javorszky/workflow-test-target
-          event-type: subo_release
+          event-type: subo-release
           client-payload: '{"tag": "${{ env.version }}", "sha": "${{ env.sha }}", "release_url": "${{ github.event.release.html_url}}"}'
       # - name: Sends the dispatch event to homebrew-subo
       #   run: |
