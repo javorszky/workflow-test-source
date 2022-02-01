@@ -9,9 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Displays release details
-        uses: sergeysova/jq-action@v2
-        with:
-          cmd: jq '.[].browser_download_url | ${{ github.event.release.assets }}'
+        run: |
+          jq '.[].browser_download_url ${{ github.event.release.assets }}'
       - name: Sends a thing someplace
         run: |
           curl \
