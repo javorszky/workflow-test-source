@@ -1,0 +1,12 @@
+name: dispatch-on-release
+on: push
+
+jobs:
+  post-on-push:
+    name: Post on push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display the path
+        run: echo $PATH
+        shell: bash
+
