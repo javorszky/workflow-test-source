@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Displays entire github event
-        run: echo '${{ toJSON(github.event) }}''
+        run: echo '${{ toJSON(github.event) }}'
       - name: Displays release details
         run: |
           jq '.[].browser_download_url ${{ toJSON(github.event.release.assets) }}'
