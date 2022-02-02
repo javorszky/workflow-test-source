@@ -7,6 +7,8 @@ jobs:
   post-on-release:
     name: Post dispatch on release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Stores new tag in environment variable
         run: |
@@ -21,7 +23,7 @@ jobs:
           rm subo.tar.gz
           echo "sha=$suboSHA" >> $GITHUB_ENV
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v1          
         with:
           token: ${{ github.token }}
           repository: javorszky/workflow-test-target
