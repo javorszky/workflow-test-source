@@ -23,15 +23,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.REPOTOKEN }}
+          token: $GITHUB_TOKEN
           repository: javorszky/workflow-test-target
           event-type: subo-release
           client-payload: '{"tag": "${{ env.version }}", "sha": "${{ env.sha }}", "release_url": "${{ github.event.release.html_url}}"}'
-      # - name: Sends the dispatch event to homebrew-subo
-      #   run: |
-      #     curl \
-      #       -X POST \
-      #       -H "Accept: application/vnd.github.v3+json" \
-      #       -H "Authorization: Bearer ${{ secrets.REPOTOKEN }}" \
-      #       https://api.github.com/repos/javorszky/workflow-test-target/dispatches \
-      #       -d '{"event_type": "subo_release", "client_payload": {"sha": "${{ env.sha }}","tag": "${{ env.version }}", "release_url": "${{ github.event.release.html_url}}"}}'
