@@ -23,7 +23,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: $GITHUB_TOKEN
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository: javorszky/workflow-test-target
           event-type: subo-release
           client-payload: '{"tag": "${{ env.version }}", "sha": "${{ env.sha }}", "release_url": "${{ github.event.release.html_url}}"}'
